@@ -1,0 +1,9 @@
+#+TITLE:Python Challenges
+
+This is a set of challenges that I have am currently solving using xAI Grok. The idea behind this
+is that I use the AI as a coach to help me improve my coding. For now I have descided to focus on python
+since I am already quite strong in the language and am using the AI to help me improve my matplotlib skills.
+
+
+This experiment has already proven to be quite usefull and I already know more about matplotlib than when I started. This
+repo can be used as a reference point for matplotlib question, and later on even other...
