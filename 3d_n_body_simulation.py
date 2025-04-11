@@ -28,7 +28,7 @@ class NbodySystem():
 
 
     def get_acceleration(self, positions):
-        """Returns the accelartion that all particles feel"""
+        """Returns the acceleration that all particles feel"""
         pos = np.array(positions[-1])
         acc = np.zeros_like(pos)
 
@@ -50,10 +50,17 @@ class NbodySystem():
 
 
     def get_energy(self):
-        kinnetic = sum(0.5*m*sum(i**2) for m,i in zip(self.masses, self.velocities))
+        """Compute total energy (kinetic + potential)"""
+        kinnetic = 0.5*np.sum(self.masses * np.sum(self.velocities**2, axis=1))
 
         pos = self.positions[-1]
-        potential = sum(-self.G * self.masses[idx0] * self.masses[idx1] / (np.linalg.norm(pos[idx0] - pos[idx1]) + epsilon**2) for idx0 in range(len(pos)) for idx1 in range(idx0+1, len(pos)))
+
+        # Vectorize potential
+        idx = np.triu_indices(self.n, k=1)
+        r = pos[idx[0]] - pos[idx[1]] # Pairwise differences
+        r_norm = np.linalg.norm(r, axis=1) + epsilon
+
+        potential = -self.G * np.sum(self.masses[idx[0]] * self.masses[idx[1]] / r_norm)
         return kinnetic + potential 
         
 
